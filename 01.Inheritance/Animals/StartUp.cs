@@ -17,28 +17,35 @@ namespace Animals
                     .ReadLine()
                     .Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                switch (animalType)
+                try
                 {
-                    case "Dog":
-                        Dog dog = new Dog(animalTokens[0], int.Parse(animalTokens[1]), animalTokens[2]);
-                        animals.Add(dog);
-                        break;
-                    case "Cat":
-                        Cat cat = new Cat(animalTokens[0], int.Parse(animalTokens[1]), animalTokens[2]);
-                        animals.Add(cat);
-                        break;
-                    case "Kitten":
-                        Kitten kitten = new(animalTokens[0], int.Parse(animalTokens[1]));
-                        animals.Add(kitten);
-                        break;
-                    case "Tomcat":
-                        Tomcat tomcat = new(animalTokens[0], int.Parse(animalTokens[1]));
-                        animals.Add(tomcat);
-                        break;
-                    case "Frog":
-                        Frog frog = new Frog(animalTokens[0], int.Parse(animalTokens[1]), animalTokens[2]);
-                        animals.Add(frog);
-                        break;
+                    switch (animalType)
+                    {
+                        case "Dog":
+                            Dog dog = new Dog(animalTokens[0], int.Parse(animalTokens[1]), animalTokens[2]);
+                            animals.Add(dog);
+                            break;
+                        case "Cat":
+                            Cat cat = new Cat(animalTokens[0], int.Parse(animalTokens[1]), animalTokens[2]);
+                            animals.Add(cat);
+                            break;
+                        case "Kitten":
+                            Kitten kitten = new(animalTokens[0], int.Parse(animalTokens[1]));
+                            animals.Add(kitten);
+                            break;
+                        case "Tomcat":
+                            Tomcat tomcat = new(animalTokens[0], int.Parse(animalTokens[1]));
+                            animals.Add(tomcat);
+                            break;
+                        case "Frog":
+                            Frog frog = new Frog(animalTokens[0], int.Parse(animalTokens[1]), animalTokens[2]);
+                            animals.Add(frog);
+                            break;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
                 }
 
             }

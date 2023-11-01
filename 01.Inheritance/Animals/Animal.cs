@@ -23,7 +23,7 @@ namespace Animals
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException("Invalid input!");
+                    throw new ArgumentException("Invalid input!");
                 }
                 name = value;
             }
@@ -38,7 +38,7 @@ namespace Animals
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentNullException("Invalid input!");
+                    throw new ArgumentException("Invalid input!");
                 }
                 age = value;
             }
@@ -53,7 +53,7 @@ namespace Animals
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException("Invalid input!");
+                    throw new ArgumentException("Invalid input!");
                 }
                 gender = value;
             }

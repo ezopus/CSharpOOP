@@ -3,10 +3,11 @@
     public class Product
     {
         private string name;
+        private decimal cost;
 
         public Product(string name, decimal cost)
         {
-            this.name = name;
+            Name = name;
             Cost = cost;
         }
 
@@ -23,7 +24,19 @@
             }
         }
 
-        public decimal Cost { get; private set; }
+        public decimal Cost
+        {
+            get => cost;
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("Money cannot be negative");
+                }
+                cost = value;
+
+            }
+        }
 
         public override string ToString() => $"{Name}";
     }

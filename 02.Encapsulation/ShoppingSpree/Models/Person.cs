@@ -6,12 +6,13 @@ namespace ShoppingSpree.Models
     {
         private string name;
         private decimal money;
+        private List<Product> products;
 
         public Person(string name, decimal money)
         {
             Name = name;
             Money = money;
-            Products = new List<Product>();
+            products = new List<Product>();
         }
 
         public string Name
@@ -39,15 +40,26 @@ namespace ShoppingSpree.Models
                 money = value;
             }
         }
+        public string Add(Product product)
+        {
+            if (Money < product.Cost)
+            {
+                return $"{Name} can't afford {product.Name}";
+            }
 
-        public List<Product> Products { get; private set; }
+            products.Add(product);
+            Money -= product.Cost;
+            return $"{Name} bought {product.Name}";
+        }
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append($"{Name} - ");
-            sb.Append(string.Join(", ", Products));
-            return sb.ToString().TrimEnd();
+            if (products.Count == 0)
+            {
+                return $"{Name} - Nothing bought";
+            }
+
+            return $"{Name} - {string.Join(", ", products.Select(p => p.Name))}";
         }
     }
 }

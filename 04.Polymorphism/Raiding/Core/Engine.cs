@@ -62,7 +62,6 @@ namespace Raiding.Core
             string heroType = reader.ReadLine();
 
             return heroFactory.CreateHero(heroName, heroType);
-
         }
 
     }

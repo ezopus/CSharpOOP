@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandPattern", "CommandPa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValidationAttributes", "ValidationAttributes\ValidationAttributes.csproj", "{090F58EA-EB02-44D1-A2F8-16B36B445C65}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stealer", "Stealer\Stealer.csproj", "{E87D2DD6-97DD-4C6E-AD5F-EE04DA17E289}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthorProblem", "AuthorProblem\AuthorProblem.csproj", "{E62C09AF-CB48-434C-9A12-E507E13AA141}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{090F58EA-EB02-44D1-A2F8-16B36B445C65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{090F58EA-EB02-44D1-A2F8-16B36B445C65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{090F58EA-EB02-44D1-A2F8-16B36B445C65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E87D2DD6-97DD-4C6E-AD5F-EE04DA17E289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E87D2DD6-97DD-4C6E-AD5F-EE04DA17E289}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E87D2DD6-97DD-4C6E-AD5F-EE04DA17E289}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E87D2DD6-97DD-4C6E-AD5F-EE04DA17E289}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E62C09AF-CB48-434C-9A12-E507E13AA141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E62C09AF-CB48-434C-9A12-E507E13AA141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E62C09AF-CB48-434C-9A12-E507E13AA141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E62C09AF-CB48-434C-9A12-E507E13AA141}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

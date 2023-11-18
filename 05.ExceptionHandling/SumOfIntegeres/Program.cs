@@ -1,5 +1,5 @@
 ﻿
-string[] tokens = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+string[] tokens = Console.ReadLine().Split(' ');
 int sum = 0;
 
 foreach (string token in tokens)
@@ -16,10 +16,8 @@ foreach (string token in tokens)
     {
         Console.WriteLine($"The element '{token}' is out of range!");
     }
-    finally
-    {
-        Console.WriteLine($"Element '{token}' processed - current sum: {sum}");
-    }
-}
 
+    Console.WriteLine($"Element '{token}' processed - current sum: {sum}");
+
+}
 Console.WriteLine($"The total sum of all integers is: {sum}");

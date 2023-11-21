@@ -33,10 +33,6 @@ namespace DatabaseExtended.Tests
             database = new Database(persons);
 
             Assert.AreEqual(persons.Length, database.Count);
-            //InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
-            //    () => database = new Database(data));
-
-            //Assert.AreEqual("Array's capacity must be exactly 16 integers!", ex.Message);
         }
 
         [Test]

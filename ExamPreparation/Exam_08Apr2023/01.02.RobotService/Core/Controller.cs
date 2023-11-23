@@ -69,17 +69,24 @@ namespace RobotService.Core
                 currentSupplement = new LaserRadar();
             }
 
-            List<IRobot> robotsNotSupportingCurrentSupplement = robots.Models().Where(r => !r.InterfaceStandards.Contains(currentSupplement.InterfaceStandard) && r.Model == model).ToList();
+            ISupplement firstSupplement = supplements.FindByStandard(currentSupplement.InterfaceStandard);
+
+            List<IRobot> robotsNotSupportingCurrentSupplement = robots
+                .Models()
+                .Where(r => !r.InterfaceStandards.Contains(firstSupplement.InterfaceStandard)
+                            && r.Model == model)
+                .ToList();
 
             if (robotsNotSupportingCurrentSupplement.Count == 0)
             {
                 return string.Format(OutputMessages.AllModelsUpgraded, model);
             }
 
-            supplements.RemoveByName(supplementTypeName);
-            robotsNotSupportingCurrentSupplement.First().InstallSupplement(currentSupplement);
-            return string.Format(OutputMessages.UpgradeSuccessful, model, supplementTypeName);
+            robotsNotSupportingCurrentSupplement.First().InstallSupplement(firstSupplement);
 
+            supplements.RemoveByName(supplementTypeName);
+
+            return string.Format(OutputMessages.UpgradeSuccessful, model, supplementTypeName);
         }
         public string PerformService(string serviceName, int interfaceStandard, int totalPowerNeeded)
         {
@@ -92,6 +99,7 @@ namespace RobotService.Core
             }
 
             supportedRobots = supportedRobots.OrderByDescending(b => b.BatteryLevel).ToList();
+
             int sumOfBatteryLevel = supportedRobots.Sum(b => b.BatteryLevel);
 
             if (sumOfBatteryLevel < totalPowerNeeded)
@@ -105,7 +113,6 @@ namespace RobotService.Core
                 {
                     robotsWorking++;
                     IRobot currentRobot = supportedRobots.FirstOrDefault(cr => cr.BatteryLevel > 0);
-                    int currentEnergy = currentRobot.BatteryLevel;
                     if (currentRobot.BatteryLevel >= totalPowerNeeded)
                     {
                         currentRobot.ExecuteService(totalPowerNeeded);
@@ -113,7 +120,7 @@ namespace RobotService.Core
                     }
                     else
                     {
-                        totalPowerNeeded -= currentEnergy;
+                        totalPowerNeeded -= currentRobot.BatteryLevel;
                         currentRobot.ExecuteService(currentRobot.BatteryLevel);
                     }
                 }

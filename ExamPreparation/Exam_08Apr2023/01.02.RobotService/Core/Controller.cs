@@ -131,7 +131,7 @@ namespace RobotService.Core
         public string RobotRecovery(string model, int minutes)
         {
             int eatingRobots = 0;
-            foreach (var robot in robots.Models().Where(r => r.BatteryLevel < 50 && r.Model == model))
+            foreach (var robot in robots.Models().Where(r => r.BatteryLevel < r.BatteryCapacity / 2 && r.Model == model))
             {
                 robot.Eating(minutes);
                 eatingRobots++;

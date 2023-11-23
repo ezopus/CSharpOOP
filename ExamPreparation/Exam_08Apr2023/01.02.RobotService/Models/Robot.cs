@@ -87,7 +87,7 @@ namespace RobotService.Models
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine($"{this.GetType().Name} {Model}");
+            sb.AppendLine($"{this.GetType().Name} {Model}:");
             sb.AppendLine($"--Maximum battery capacity: {BatteryCapacity}");
             sb.AppendLine($"--Current battery level: {BatteryLevel}");
             if (InterfaceStandards.Any())

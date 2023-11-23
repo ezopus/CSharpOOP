@@ -57,15 +57,17 @@ namespace VendingRetail.Tests
         }
 
         [Test]
-        public void AddDrink_SuccessfullyAddsDrink_WhenThereIsCapacity()
+        public void AddDrink_SuccessfullyAddDrinks_WhenThereAreButtonsAvailable()
         {
-            string drink = "Coffee";
-            double price = 1.50;
             CoffeeMat coffeeMat = new CoffeeMat(500, 10);
 
-            bool drinkAdded = coffeeMat.AddDrink(drink, price);
-
+            bool drinkAdded = coffeeMat.AddDrink("Coffee", 1.50);
+            drinkAdded = coffeeMat.AddDrink("Tea", 1.20);
             Assert.IsTrue(drinkAdded);
+
+            drinkAdded = coffeeMat.AddDrink("Latte", 1.70);
+            Assert.IsTrue(drinkAdded);
+
         }
         [Test]
         public void AddDrink_FailsToAddDrink_WhenDrinkExists()

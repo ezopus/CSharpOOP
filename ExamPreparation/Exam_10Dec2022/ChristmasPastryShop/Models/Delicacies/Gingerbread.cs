@@ -2,7 +2,7 @@
 {
     public class Gingerbread : Delicacy
     {
-        private const double GingerbreadPrice = 4.0;
+        private const double GingerbreadPrice = 4.00;
         public Gingerbread(string name)
             : base(name, GingerbreadPrice)
         {

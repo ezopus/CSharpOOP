@@ -18,7 +18,7 @@ namespace ChristmasPastryShop.Models.Delicacies
             get => name;
             private set
             {
-                if (string.IsNullOrEmpty(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentException(ExceptionMessages.NameNullOrWhitespace);
                 }

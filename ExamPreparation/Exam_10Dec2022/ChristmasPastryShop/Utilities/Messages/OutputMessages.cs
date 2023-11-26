@@ -6,11 +6,9 @@
 
         public const string NewDelicacyAdded = "{0} {1} added to the pastry shop!";
 
-        public const string DelicacyStillNotAdded = "There is no {0} {1} available!";
+        public const string DelicacyStillNotAdded = "There is no {0} available!";
 
         public const string DelicacyAlreadyAdded = "{0} is already added in the pastry shop!";
-
-        public const string InvalidDelicacyType = "Delicacy type {0} is not supported in our application!";
 
         public const string NewCocktailAdded = "{0} {1} {2} added to the pastry shop!";
 
@@ -37,5 +35,7 @@
         public const string NotRecognizedType = "{0} is not recognized type!";
 
         public const string NotRecognizedItemName = "There is no {0} {1} available!";
+
+        public const string InvalidDelicacyType = "Delicacy type {0} is not supported in our application!";
     }
 }

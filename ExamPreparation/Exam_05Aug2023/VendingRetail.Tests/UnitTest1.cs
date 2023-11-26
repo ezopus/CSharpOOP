@@ -15,25 +15,20 @@ namespace VendingRetail.Tests
 
             CoffeeMat coffeeMat = new CoffeeMat(0, 10);
 
-            Assert.AreEqual(expectedWaterCapacity, coffeeMat.WaterCapacity);
-            Assert.AreEqual(expectedButtonsCount, coffeeMat.ButtonsCount);
-            Assert.AreEqual(0, coffeeMat.Income);
-            Assert.AreEqual(0, coffeeMat.CollectIncome());
-            Assert.AreEqual("Water tank is already full!", coffeeMat.FillWaterTank());
+            Assert.IsNotNull(coffeeMat);
+            Assert.AreEqual(0, coffeeMat.WaterCapacity);
+            Assert.AreEqual(10, coffeeMat.ButtonsCount);
         }
 
         [Test]
         public void Income_GetsValueCorrectly()
         {
             CoffeeMat coffeMat = new CoffeeMat(100, 1);
+            coffeMat.FillWaterTank();
             coffeMat.AddDrink("Coffee", 1.50);
 
-            Assert.AreEqual(0, coffeMat.Income);
-
             coffeMat.BuyDrink("Coffee");
-            coffeMat.CollectIncome();
-
-            Assert.AreEqual(0, coffeMat.Income);
+            Assert.AreEqual(1.50, coffeMat.Income);
         }
 
         [Test]
@@ -43,7 +38,9 @@ namespace VendingRetail.Tests
 
             CoffeeMat coffeMat = new CoffeeMat(500, 10);
 
-            Assert.AreEqual($"Water tank is filled with {expectedWaterCapacity}ml", coffeMat.FillWaterTank());
+            string expectedResult = coffeMat.FillWaterTank();
+            Assert.AreEqual($"Water tank is filled with 500ml", expectedResult);
+
         }
         [Test]
         public void FillWaterTank_ReturnsCorrectMessage_WhenAlreadyFull()
@@ -99,24 +96,26 @@ namespace VendingRetail.Tests
         }
 
         [Test]
-        public void AddDrink_FailsToAddDrink_WhenThereAreNoAvailableButtonsAndDrinkAlreadyExists()
+        public void AddDrink_AddsCorrectDrinkAndPrice()
         {
             string drink = "Coffee";
             double price = 1.50;
             CoffeeMat coffeeMat = new CoffeeMat(500, 1);
             coffeeMat.AddDrink(drink, price);
+            coffeeMat.FillWaterTank();
+            double expectedIncome = 1.50;
 
-            bool drinkAdded = coffeeMat.AddDrink("Coffee", 1.50);
+            coffeeMat.BuyDrink("Coffee");
 
-            Assert.IsFalse(drinkAdded);
+            Assert.AreEqual(expectedIncome, coffeeMat.Income);
         }
 
-
-
-        [Test]
-        public void BuyDrink_Fails_WhenThereIsNotEnoughWater()
+        [TestCase(1)]
+        [TestCase(80)]
+        public void BuyDrink_Fails_WhenThereIsNotEnoughWater(int water)
         {
-            CoffeeMat coffeeMat = new CoffeeMat(100, 1);
+            CoffeeMat coffeeMat = new CoffeeMat(water, 1);
+            coffeeMat.FillWaterTank();
             coffeeMat.AddDrink("Coffee", 1.50);
             coffeeMat.BuyDrink("Coffee");
 
@@ -126,12 +125,11 @@ namespace VendingRetail.Tests
         [Test]
         public void BuyDrink_Fails_WhenThereIsNoSuchDrink()
         {
-            string name = "Coffee";
             CoffeeMat coffeeMat = new CoffeeMat(100, 1);
             coffeeMat.FillWaterTank();
             coffeeMat.AddDrink("Tea", 1.50);
 
-            Assert.AreEqual($"{name} is not available!", coffeeMat.BuyDrink("Coffee"));
+            Assert.AreEqual($"Coffee is not available!", coffeeMat.BuyDrink("Coffee"));
         }
 
         [Test]

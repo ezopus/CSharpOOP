@@ -23,8 +23,10 @@ namespace ChristmasPastryShop.Core
         public string AddBooth(int capacity)
         {
             int boothId = booths.Models.Count + 1;
+
             Booth currentBooth = new Booth(boothId, capacity);
             booths.AddModel(currentBooth);
+
             return $"{string.Format(OutputMessages.NewBoothAdded, currentBooth.BoothId, currentBooth.Capacity)}";
 
         }
@@ -40,12 +42,12 @@ namespace ChristmasPastryShop.Core
                 return string.Format(OutputMessages.InvalidCocktailSize, size);
             }
 
-            if (booths.Models.Any(b => b.CocktailMenu.Models.Any(cm => cm.Name == cocktailName && cm.Size == size)))
+            IBooth currentBooth = booths.Models.FirstOrDefault(b => b.BoothId == boothId);
+            if (currentBooth.CocktailMenu.Models.Any(cm => cm.Name == cocktailName && cm.Size == size))
             {
                 return string.Format(OutputMessages.CocktailAlreadyAdded, size, cocktailName);
             }
 
-            IBooth currentBooth = booths.Models.FirstOrDefault(b => b.BoothId == boothId);
             if (cocktailTypeName == "MulledWine")
             {
                 currentBooth.CocktailMenu.AddModel(new MulledWine(cocktailName, size));
@@ -59,28 +61,30 @@ namespace ChristmasPastryShop.Core
         }
         public string AddDelicacy(int boothId, string delicacyTypeName, string delicacyName)
         {
-            if (delicacyTypeName != "Stolen" && delicacyTypeName != "Gingerbread")
+            if (delicacyTypeName != nameof(Gingerbread) && delicacyTypeName != nameof(Stolen))
             {
                 return string.Format(OutputMessages.InvalidDelicacyType, delicacyTypeName);
             }
 
             if (booths.Models.Any(b => b.DelicacyMenu.Models.Any(dm => dm.Name == delicacyName)))
             {
-                return string.Format(OutputMessages.DelicacyAlreadyAdded, delicacyTypeName);
+                return string.Format(OutputMessages.DelicacyAlreadyAdded, delicacyName);
             }
 
-            IBooth currentBooth = booths.Models.FirstOrDefault(b => b.BoothId == boothId);
+            IDelicacy delicacy;
             if (delicacyTypeName == "Stolen")
             {
-                currentBooth.DelicacyMenu.AddModel(new Stolen(delicacyName));
+                delicacy = new Stolen(delicacyName);
             }
             else
             {
-                currentBooth.DelicacyMenu.AddModel(new Gingerbread(delicacyName));
+                delicacy = new Gingerbread(delicacyName);
             }
 
-            return string.Format(OutputMessages.NewDelicacyAdded, delicacyTypeName, delicacyName);
+            IBooth currentBooth = booths.Models.FirstOrDefault(b => b.BoothId == boothId);
+            currentBooth.DelicacyMenu.AddModel(delicacy);
 
+            return string.Format(OutputMessages.NewDelicacyAdded, delicacyTypeName, delicacyName);
         }
         public string ReserveBooth(int countOfPeople)
         {

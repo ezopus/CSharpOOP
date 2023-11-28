@@ -12,7 +12,7 @@ namespace UniversityCompetition.Models
         private int capacity;
         private readonly List<int> requiredSubjects;
 
-        public University(int universityId, string universityName, string category, int capacity, ICollection<int> requiredSubjects)
+        public University(int universityId, string universityName, string category, int capacity, List<int> requiredSubjects)
         {
             Id = universityId;
             Name = universityName;
@@ -41,7 +41,7 @@ namespace UniversityCompetition.Models
             {
                 if (value != "Technical" && value != "Economical" && value != "Humanity")
                 {
-                    throw new ArgumentException(ExceptionMessages.CategoryNotAllowed);
+                    throw new ArgumentException(string.Format(ExceptionMessages.CategoryNotAllowed, value));
                 }
                 category = value;
             }

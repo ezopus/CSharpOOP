@@ -60,7 +60,7 @@ namespace UniversityCompetition.Core
                 return string.Format(OutputMessages.AlreadyAddedUniversity, universityName);
             }
 
-            List<int> currentSubjects = new List<int>();
+            List<int> currentSubjects = new();
             foreach (var subject in requiredSubjects)
             {
                 if (subjects.FindByName(subject) != null)
@@ -120,11 +120,11 @@ namespace UniversityCompetition.Core
             //if there is no such student
             if (currentStudent == null)
             {
-                string[] names = studentName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                string[] names = studentName.Split();
                 return string.Format(OutputMessages.StudentNotRegitered, names[0], names[1]);
             }
 
-            //if there is no such univesity
+            //if there is no such university
             IUniversity currentUniversity = universities.FindByName(universityName);
             if (currentUniversity == null)
             {

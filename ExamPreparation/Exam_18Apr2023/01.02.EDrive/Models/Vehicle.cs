@@ -66,12 +66,11 @@ namespace EDriveRent.Models
         public bool IsDamaged { get; private set; }
         public void Drive(double mileage)
         {
+            BatteryLevel -= (int)Math.Round(mileage * 100 / MaxMileage);
             if (this.GetType().Name == nameof(CargoVan))
             {
-                mileage *= 1.05;
+                BatteryLevel -= 5;
             }
-
-            BatteryLevel -= (int)Math.Round(mileage * 100 / MaxMileage);
         }
 
         public void Recharge()

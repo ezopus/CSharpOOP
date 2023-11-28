@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UniversityCompetition.Models.Contracts;
 using UniversityCompetition.Repositories.Contracts;
@@ -29,7 +28,7 @@ namespace UniversityCompetition.Repositories
 
         public IStudent FindByName(string name)
         {
-            string[] names = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            string[] names = name.Split(' ');
             string firstName = names[0];
             string lastName = names[1];
             return data.FirstOrDefault(s => s.FirstName == firstName && s.LastName == lastName);

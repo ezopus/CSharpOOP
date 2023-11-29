@@ -58,9 +58,6 @@ namespace UniversityCompetition.Models
                 capacity = value;
             }
         }
-        public IReadOnlyCollection<int> RequiredSubjects
-        {
-            get => requiredSubjects;
-        }
+        public IReadOnlyCollection<int> RequiredSubjects => requiredSubjects;
     }
 }

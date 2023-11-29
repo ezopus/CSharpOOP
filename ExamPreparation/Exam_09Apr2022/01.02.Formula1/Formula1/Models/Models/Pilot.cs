@@ -20,7 +20,7 @@ namespace Formula1.Models.Models
             get => fullname;
             private set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (string.IsNullOrWhiteSpace(value) || value.Length < 5)
                 {
                     throw new ArgumentException(string.Format(ExceptionMessages.InvalidPilot, value));
                 }

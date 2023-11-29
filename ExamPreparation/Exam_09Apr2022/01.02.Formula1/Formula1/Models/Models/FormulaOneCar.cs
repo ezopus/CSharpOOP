@@ -22,7 +22,7 @@ namespace Formula1.Models.Models
             get => model;
             private set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (string.IsNullOrWhiteSpace(value) || value.Length < 3)
                 {
                     throw new ArgumentException(string.Format(ExceptionMessages.InvalidF1CarModel, value));
                 }

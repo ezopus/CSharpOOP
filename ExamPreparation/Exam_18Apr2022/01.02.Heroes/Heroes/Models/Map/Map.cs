@@ -17,7 +17,7 @@ namespace Heroes.Models.Map
         }
         public string Fight(ICollection<IHero> players)
         {
-            foreach (var hero in players.Where(p => p.Weapon != null))
+            foreach (var hero in players.Where(p => p.Weapon != null && p.IsAlive))
             {
                 if (hero.GetType().Name == nameof(Barbarian))
                 {

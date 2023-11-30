@@ -1,11 +1,10 @@
 ﻿namespace SpaceStation.Core
 {
-    using System;
-    using System.Linq;
-
     using Contracts;
     using IO;
     using IO.Contracts;
+    using System;
+    using System.Linq;
 
     public class Engine : IEngine
     {
@@ -18,7 +17,7 @@
             this.writer = new Writer();
             this.reader = new Reader();
 
-            //this.controller = new Controller();
+            this.controller = new Controller();
         }
         public void Run()
         {
@@ -67,7 +66,7 @@
 
                         this.writer.WriteLine(result);
                     }
-                    else if(input[0] == "Report")
+                    else if (input[0] == "Report")
                     {
                         string result = this.controller.Report();
 

@@ -46,7 +46,7 @@ namespace PlanetWars.Core
             }
 
             IPlanet planet = planets.FindByName(planetName);
-            if (planet.Army.Any(w => w.GetType().Name == unitTypeName))
+            if (planet.Army.Any(u => u.GetType().Name == unitTypeName))
             {
                 throw new InvalidOperationException(string.Format(ExceptionMessages.UnitAlreadyAdded, unitTypeName, planetName));
             }
@@ -121,7 +121,7 @@ namespace PlanetWars.Core
                 throw new InvalidOperationException(ExceptionMessages.NoUnitsFound);
             }
 
-            currentPlanet.Spend(1.25);
+            currentPlanet.Spend(1.25d);
             currentPlanet.TrainArmy();
 
             return string.Format(OutputMessages.ForcesUpgraded, planetName);
@@ -131,70 +131,53 @@ namespace PlanetWars.Core
         {
             IPlanet attacker = planets.FindByName(planetOne);
             IPlanet defender = planets.FindByName(planetTwo);
-
+            IPlanet winner = null;
+            IPlanet loser = null;
             //attacker wins on military power
             if (attacker.MilitaryPower > defender.MilitaryPower)
             {
-                attacker.Spend(attacker.Budget * 0.5);
-
-                double plunder = defender.Budget * 0.5 + defender.Army.Sum(a => a.Cost) + defender.Weapons.Sum(w => w.Price);
-
-                attacker.Profit(plunder);
-                planets.RemoveItem(defender.Name);
-
-                return string.Format(OutputMessages.WinnigTheWar, attacker.Name, defender.Name);
+                winner = attacker;
+                loser = defender;
             }
-
             //defender wins on military power
-            if (attacker.MilitaryPower < defender.MilitaryPower)
+            else if (attacker.MilitaryPower < defender.MilitaryPower)
             {
-                defender.Spend(defender.Budget * 0.5);
-
-                double plunder = attacker.Budget * 0.5 + attacker.Army.Sum(a => a.Cost) + attacker.Weapons.Sum(w => w.Price);
-
-                defender.Profit(plunder);
-                planets.RemoveItem(attacker.Name);
-
-                return string.Format(OutputMessages.WinnigTheWar, attacker.Name, defender.Name);
+                winner = defender;
+                loser = attacker;
             }
 
             //attacker and defender have same military power
-            if (attacker.MilitaryPower == defender.MilitaryPower)
+            else
             {
-                var firstHasNuclear = attacker.Weapons.FirstOrDefault(w => w.GetType().Name == nameof(NuclearWeapon));
-                var secondHasNuclear = defender.Weapons.FirstOrDefault(w => w.GetType().Name == nameof(NuclearWeapon));
+                var firstHasNuclear = attacker.Weapons.Any(w => w.GetType().Name == nameof(NuclearWeapon));
+                var secondHasNuclear = defender.Weapons.Any(w => w.GetType().Name == nameof(NuclearWeapon));
 
-                if (firstHasNuclear != null && secondHasNuclear == null)
+                if ((firstHasNuclear && secondHasNuclear) || (!firstHasNuclear && !secondHasNuclear))
                 {
-                    double plunder = defender.Budget * 0.5 + defender.Army.Sum(a => a.Cost) + defender.Weapons.Sum(w => w.Price);
-
-                    attacker.Spend(attacker.Budget * 0.5);
-
-                    attacker.Profit(plunder);
-                    planets.RemoveItem(defender.Name);
-
-                    return string.Format(OutputMessages.WinnigTheWar, attacker.Name, defender.Name);
+                    attacker.Spend(attacker.Budget / 2);
+                    defender.Spend(defender.Budget / 2);
+                    return string.Format(OutputMessages.NoWinner);
                 }
 
-                if (firstHasNuclear == null && secondHasNuclear != null)
+                if (firstHasNuclear)
                 {
-                    double plunder = attacker.Budget * 0.5 + attacker.Army.Sum(a => a.Cost) + attacker.Weapons.Sum(w => w.Price);
-
-                    defender.Spend(defender.Budget * 0.5);
-
-                    defender.Profit(plunder);
-                    planets.RemoveItem(attacker.Name);
-
-                    return string.Format(OutputMessages.WinnigTheWar, attacker.Name, defender.Name);
+                    winner = attacker;
+                    loser = defender;
                 }
-                if ((firstHasNuclear != null && secondHasNuclear != null)
-                    || (firstHasNuclear == null && secondHasNuclear == null))
+                else
                 {
-                    attacker.Spend(attacker.Budget * 0.5);
-                    defender.Spend(defender.Budget * 0.5);
+                    winner = defender;
+                    loser = attacker;
                 }
             }
-            return string.Format(OutputMessages.NoWinner);
+            loser.Spend(loser.Budget / 2);
+            winner.Spend(winner.Budget / 2);
+            winner.Profit(loser.Budget);
+            double totalProfit = loser.Weapons.Sum(w => w.Price) + loser.Army.Sum(u => u.Cost);
+            winner.Profit(totalProfit);
+            planets.RemoveItem(loser.Name);
+
+            return string.Format(OutputMessages.WinnigTheWar, winner.Name, loser.Name);
         }
 
         public string ForcesReport()

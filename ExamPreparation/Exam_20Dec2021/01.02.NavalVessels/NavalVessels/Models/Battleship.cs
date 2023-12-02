@@ -49,7 +49,7 @@ namespace NavalVessels.Models
                 sb.AppendLine("OFF");
             }
 
-            return sb.ToString().TrimEnd();
+            return sb.ToString().Trim();
         }
     }
 }

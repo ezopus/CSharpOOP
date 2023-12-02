@@ -68,6 +68,10 @@ namespace PlanetWars.Models.Planets
                 }
                 return Math.Round(totalAmount, 3);
             }
+            private set
+            {
+
+            }
         }
 
         public IReadOnlyCollection<IMilitaryUnit> Army => units.Models;

@@ -28,6 +28,7 @@ namespace PlanetWars.Models.MilitaryUnits
         {
             if (EnduranceLevel + 1 > 20)
             {
+                EnduranceLevel = 20;
                 throw new ArgumentException(ExceptionMessages.EnduranceLevelExceeded);
             }
 

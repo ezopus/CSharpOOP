@@ -104,13 +104,13 @@ namespace NavalVessels.Core
             {
                 Battleship battleship = vessel as Battleship;
                 battleship.ToggleSonarMode();
-                return string.Format(OutputMessages.ToggleBattleshipSonarMode, vesselName);
+                return string.Format(OutputMessages.ToggleBattleshipSonarMode, battleship.Name);
             }
             else
             {
                 Submarine submarine = vessel as Submarine;
                 submarine.ToggleSubmergeMode();
-                return string.Format(OutputMessages.ToggleSubmarineSubmergeMode, vesselName);
+                return string.Format(OutputMessages.ToggleSubmarineSubmergeMode, submarine.Name);
             }
         }
 
@@ -120,29 +120,29 @@ namespace NavalVessels.Core
             IVessel defender = vessels.FindByName(defendingVesselName);
             if (attacker == null)
             {
-                return string.Format(OutputMessages.VesselNotFound, attacker.Name);
+                return string.Format(OutputMessages.VesselNotFound, attackingVesselName);
             }
 
             if (defender == null)
             {
-                return string.Format(OutputMessages.VesselNotFound, defender.Name);
+                return string.Format(OutputMessages.VesselNotFound, defendingVesselName);
             }
 
             if (attacker.ArmorThickness == 0)
             {
-                return string.Format(OutputMessages.AttackVesselArmorThicknessZero, attackingVesselName);
+                return string.Format(OutputMessages.AttackVesselArmorThicknessZero, attacker.Name);
             }
 
             if (defender.ArmorThickness == 0)
             {
-                return string.Format(OutputMessages.AttackVesselArmorThicknessZero, defendingVesselName);
+                return string.Format(OutputMessages.AttackVesselArmorThicknessZero, defender.Name);
             }
 
             attacker.Attack(defender);
             attacker.Captain.IncreaseCombatExperience();
             defender.Captain.IncreaseCombatExperience();
 
-            return string.Format(OutputMessages.SuccessfullyAttackVessel, defendingVesselName, attackingVesselName, defender.ArmorThickness);
+            return string.Format(OutputMessages.SuccessfullyAttackVessel, defender.Name, attacker.Name, defender.ArmorThickness);
         }
 
         public string ServiceVessel(string vesselName)

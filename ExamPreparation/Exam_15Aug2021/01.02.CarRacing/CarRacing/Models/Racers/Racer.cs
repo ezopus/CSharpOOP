@@ -49,7 +49,7 @@ namespace CarRacing.Models.Racers
         public int DrivingExperience
         {
             get => drivingExperience;
-            private set
+            protected set
             {
                 if (value < 0 || value > 100)
                 {
@@ -63,7 +63,7 @@ namespace CarRacing.Models.Racers
             get => car;
             private set
             {
-                if (value == null)
+                if (value.Equals(null))
                 {
                     throw new ArgumentException(ExceptionMessages.InvalidRacerCar);
                 }

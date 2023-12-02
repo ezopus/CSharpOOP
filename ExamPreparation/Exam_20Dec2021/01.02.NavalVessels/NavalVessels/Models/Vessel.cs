@@ -78,7 +78,7 @@ namespace NavalVessels.Models
             sb.AppendLine($" *Armor thickness: {ArmorThickness}");
             sb.AppendLine($" *Main weapon caliber: {MainWeaponCaliber}");
             sb.AppendLine($" *Speed: {Speed} knots");
-            sb.Append($" *Targets: ");
+            sb.Append(" *Targets: ");
             if (targets.Any())
             {
                 sb.AppendLine(string.Join(", ", targets));
@@ -88,7 +88,7 @@ namespace NavalVessels.Models
                 sb.AppendLine("None");
             }
 
-            return sb.ToString().TrimEnd();
+            return sb.ToString().Trim();
         }
     }
 }
